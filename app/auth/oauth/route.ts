@@ -1,3 +1,4 @@
+export const runtime = "nodejs";
 import { NextResponse } from 'next/server'
 // The client you created from the Server-Side Auth instructions
 import { createClient } from '@/lib/server'
@@ -16,16 +17,9 @@ export async function GET(request: Request) {
     const supabase = await createClient()
     const { error } = await supabase.auth.exchangeCodeForSession(code)
     if (!error) {
-      const forwardedHost = request.headers.get('x-forwarded-host') // original origin before load balancer
-      const isLocalEnv = process.env.NODE_ENV === 'development'
-      if (isLocalEnv) {
+        // original origin before load balancer
         // we can be sure that there is no load balancer in between, so no need to watch for X-Forwarded-Host
         return NextResponse.redirect(`${process.env.NEXT_PUBLIC_URL}${next}`)
-      } else if (forwardedHost) {
-        return NextResponse.redirect(`${process.env.NEXT_PUBLIC_URL}${next}`)
-      } else {
-        return NextResponse.redirect(`${process.env.NEXT_PUBLIC_URL}${next}`)
-      }
     }
   }
 
