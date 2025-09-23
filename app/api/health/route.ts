@@ -1,14 +1,9 @@
-export async function GET(req: Request, res: Response) {
-    return new Response(
-        JSON.stringify({
-            status: "ok",
-            page: "chat",
-            uptime: process.uptime(),
-        }),
-        {
-            headers: {
-                "content-type": "application/json",
-            },
-        }
-    )
+import { NextResponse } from "next/server";
+
+export async function GET(req: Request) {
+    return NextResponse.json({
+        status: "ok",
+        page: "chat",
+        uptime: process.uptime(),
+    });
 }
