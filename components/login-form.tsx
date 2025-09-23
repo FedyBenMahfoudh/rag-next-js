@@ -31,7 +31,7 @@ export function LoginForm({
       const { error } = await supabase.auth.signInWithOAuth({
         provider: "google",
         options: {
-          redirectTo: `${window.location.origin}/auth/oauth?next=/`,
+          redirectTo: `${process.env.NEXT_PUBLIC_URL}/auth/oauth?next=/`,
         },
       });
 
@@ -50,7 +50,7 @@ export function LoginForm({
       const { error } = await supabase.auth.signInWithOAuth({
         provider: "github",
         options: {
-          redirectTo: `${window.location.origin}/auth/oauth?next=/`,
+          redirectTo: `${process.env.NEXT_PUBLIC_URL}/auth/oauth?next=/`,
         },
       });
 
