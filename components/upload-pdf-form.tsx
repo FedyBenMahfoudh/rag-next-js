@@ -96,12 +96,10 @@ export const UploadForm = ({user} : {user : User}) => {
        const insertedDocs = await insertFiles(conversation.id,uploadedFilesData);
 
        const chunks = await embedFile(insertedDocs);
-       console.log("conversation :",conversation);
-       console.log("documents :",insertedDocs);
-       console.log("chunks :",chunks);
 
        router.push(`/chat/c/${conversation.id}`);
 
+       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     }catch (e : any) {
         toast.error(e.message);
         console.log(e);
