@@ -76,7 +76,7 @@ export function DashboardSidebar({ conversations }: DashboardSidebarProps) {
                     <Link href="/" className="flex items-center space-x-2">
                       <Icons.logo className="size-6" />
                       <span className="font-urban text-lg font-bold">
-                        My RAG
+                        CPU RAG
                       </span>
                     </Link>
                   </div>

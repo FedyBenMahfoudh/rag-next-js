@@ -78,7 +78,6 @@ export const UploadForm = ({user} : {user : User}) => {
       return;
     }
 
-    // @ts-ignore
       try {
        const conversation = await createNewConversation(values.conversationName,user.id);
        if(!conversation || !conversation.id) {

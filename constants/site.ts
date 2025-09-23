@@ -1,7 +1,7 @@
 import { sidebarNavItem } from "@/types";
 
 export const siteConfig = {
-  name: "My RAG",
+  name: "CPU RAG",
   description: "A simple RAG application",
   url: "https://my-rag.example.com",
   ogImage: "https://my-rag.example.com/og-image.png",

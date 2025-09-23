@@ -22,7 +22,7 @@ export const deleteConversation = async (conversationId:string) :Promise<Convers
 export const getConversations = async (user_id:string) : Promise<Conversation[]> => {
     const db = createClient();
     const { data, error } = await db.from("conversations").select("*").eq('user_id',user_id).order("updated_at",{ascending : false});
-    if (error || !data || data.length === 0) {
+    if (error) {
         throw new Error("Could not get conversations");
     }
     return data;

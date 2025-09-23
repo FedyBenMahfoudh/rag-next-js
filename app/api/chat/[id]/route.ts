@@ -5,7 +5,6 @@ import {responsePrompt, SYSTEM_PROMPT} from "@/lib/prompts";
 import { GroqCloud, GroqRoles} from "@/lib/modelProviders/groq";
 import {chatSchema} from "@/lib/validations";
 import {getConversationById} from "@/actions/conversations.actions";
-/*import {OpenAIStream, StreamingTextResponse} from "ai";*/
 
 export async function POST(req: Request, { params }: { params: Promise<{ id: string }> }) {
     try {
