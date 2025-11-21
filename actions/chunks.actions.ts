@@ -20,7 +20,7 @@ export const insertChunks =  async (rows : Chunk[])=> {
 
 export async function getRelevantChunks(
     queryEmbedding: number[],
-    threshold = 0.75,
+    threshold = 0,
     conversationId : string,
     limit = 5
 ) {

@@ -1,30 +1,20 @@
 "use client";
 
 import * as React from "react";
-import { ChevronsUpDown, Plus } from "lucide-react";
 
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import {
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-  SidebarTrigger,
-  useSidebar,
+    SidebarMenu,
+    SidebarMenuButton,
+    SidebarMenuItem,
+    SidebarTrigger, useSidebar,
 } from "@/components/ui/sidebar";
 import { Icons } from "./icons";
 import { siteConfig } from "@/constants/site";
+import {useIsMobile} from "@/hooks/use-mobile";
+import {X} from "lucide-react";
 
 export function TeamSwitcher() {
-  const { isMobile, setOpenMobile } = useSidebar();
-
+    const { isMobile,setOpenMobile } = useSidebar();
   return (
     <SidebarMenu>
       <SidebarMenuItem>
@@ -32,7 +22,7 @@ export function TeamSwitcher() {
           size="lg"
           className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground flex-row-reverse"
         >
-          <SidebarTrigger />
+            {isMobile ? <X size={7} onClick={() => setOpenMobile(false)} />:<SidebarTrigger/>}
           <div className="grid flex-1 text-left text-sm leading-tight">
             <span className="truncate font-medium">{siteConfig.name}</span>
           </div>

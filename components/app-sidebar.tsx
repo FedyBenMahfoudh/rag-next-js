@@ -27,7 +27,7 @@ export async function AppSidebar({
     const conversations = await getConversations(user?.id);
 
   return (
-    <Sidebar collapsible="icon" {...props}>
+    <Sidebar variant={"floating"} collapsible="icon" {...props}>
       <SidebarHeader>
         <TeamSwitcher />
       </SidebarHeader>

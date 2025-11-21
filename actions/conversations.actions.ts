@@ -66,7 +66,7 @@ export const streamAnswerQuery = async (
     onChunk: (partial: string) => void,
 ): Promise<string> => {
     const response = await fetch(
-        `http://localhost:3000/api/chat/${conversationId}`,
+        `api/chat/${conversationId}`,
         {
             method: "POST",
             headers: {
