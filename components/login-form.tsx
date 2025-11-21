@@ -14,7 +14,6 @@ import { useState } from "react";
 import { Loader } from "lucide-react";
 import { Icons } from "./icons";
 
-
 export function LoginForm({
   className,
   ...props
@@ -32,13 +31,15 @@ export function LoginForm({
       const { error } = await supabase.auth.signInWithOAuth({
         provider: "google",
         options: {
-          redirectTo: `${process.env.NEXT_PUBLIC_URL}/auth/oauth?next=/`,
+          redirectTo: `${window.location.origin}/auth/oauth?next=/`,
         },
       });
 
       if (error) throw error;
     } catch (error: unknown) {
       setError(error instanceof Error ? error.message : "An error occurred");
+
+    }finally {
       setIsGoogleLoading(false);
     }
   };
@@ -51,13 +52,14 @@ export function LoginForm({
       const { error } = await supabase.auth.signInWithOAuth({
         provider: "github",
         options: {
-          redirectTo: `${process.env.NEXT_PUBLIC_URL}/auth/oauth?next=/`,
+          redirectTo: `${window.location.origin}/auth/oauth?next=/`,
         },
       });
 
       if (error) throw error;
     } catch (error: unknown) {
       setError(error instanceof Error ? error.message : "An error occurred");
+    } finally {
       setIsGithubLoading(false);
     }
   };
