@@ -16,12 +16,12 @@ import {
 import { Input } from "./ui/input";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import {User} from "@supabase/supabase-js";
-import {createNewConversation} from "@/actions/conversations.actions";
-import {uploadFile} from "@/actions/storage.actions";
-import {embedFile, insertFiles} from "@/actions/file.actions";
-import {MultiStepLoader} from "@/components/ui/multi-step-loader";
-import {useRouter} from "next/navigation";
+import { User } from "@supabase/supabase-js";
+import { createNewConversation } from "@/actions/conversations.actions";
+import { uploadFile } from "@/actions/storage.actions";
+import { embedFile, insertFiles } from "@/actions/file.actions";
+import { MultiStepLoader } from "@/components/ui/multi-step-loader";
+import { useRouter } from "next/navigation";
 
 // Define the form schema
 const formSchema = z.object({
@@ -31,19 +31,19 @@ const formSchema = z.object({
 type FormValues = z.infer<typeof formSchema>;
 
 const loadingStates = [
-    { text: "🧩 Processing contents..." },
-    { text: "🔎 Checking documents..." },
-    { text: "ℹ️ Getting info..." },
-    { text: "🤖 Ready to chat!" },
+  { text: "🧩 Processing contents..." },
+  { text: "🔎 Checking documents..." },
+  { text: "ℹ️ Getting info..." },
+  { text: "🤖 Ready to chat!" },
 ];
 
-export const UploadForm = ({user} : {user : User}) => {
+export const UploadForm = ({ user }: { user: User }) => {
   const [documents, setDocuments] = useState<File[]>([]);
   const [loading, setIsLoading] = useState(false);
   const [showLoader, setShowLoader] = useState(false);
   const router = useRouter();
 
-    const form = useForm<FormValues>({
+  const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       conversationName: "",
@@ -78,45 +78,51 @@ export const UploadForm = ({user} : {user : User}) => {
       return;
     }
 
-      try {
-       const conversation = await createNewConversation(values.conversationName,user.id);
-       if(!conversation || !conversation.id) {
-           throw new Error("Error in uploading files");
-       }
-
-       setShowLoader(true);
-
-       const uploadedFiles = documents.map(async (doc : File) => {
-              return await uploadFile(doc, user.id, conversation.id);
-       });
-
-       console.log("uploaded Files",uploadedFiles);
-
-       const uploadedFilesData = await Promise.all(uploadedFiles);
-       const insertedDocs = await insertFiles(conversation.id,uploadedFilesData);
-
-       const chunks = await embedFile(insertedDocs);
-
-       router.push(`/chat/c/${conversation.id}`);
-
-       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    }catch (e : any) {
-        toast.error(e.message);
-        console.log(e);
-
-    }finally {
-        setIsLoading(false);
-        setShowLoader(false);
+    try {
+      const conversation = await createNewConversation(
+        values.conversationName,
+        user.id
+      );
+      if (!conversation || !conversation.id) {
+        throw new Error("Error in uploading files");
       }
+
+      setShowLoader(true);
+
+      const uploadedFiles = documents.map(async (doc: File) => {
+        return await uploadFile(doc, user.id, conversation.id);
+      });
+
+      console.log("uploaded Files", uploadedFiles);
+
+      const uploadedFilesData = await Promise.all(uploadedFiles);
+      const insertedDocs = await insertFiles(
+        conversation.id,
+        uploadedFilesData
+      );
+
+      const chunks = await embedFile(insertedDocs);
+      console.log("Embedded Chunks", chunks);
+
+      router.push(`/chat/c/${conversation.id}`);
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (e: any) {
+      toast.error(e.message);
+      console.log(e);
+    } finally {
+      setIsLoading(false);
+      setShowLoader(false);
+    }
   };
   return (
     <Form {...form}>
-        <MultiStepLoader
-            loadingStates={loadingStates}
-            loading={showLoader}
-            duration={2000}
-            loop={false}
-        />
+      <MultiStepLoader
+        loadingStates={loadingStates}
+        loading={showLoader}
+        duration={2000}
+        loop={false}
+      />
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
         <FormField
           control={form.control}

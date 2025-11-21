@@ -3,9 +3,7 @@ import { GeistSans } from "geist/font/sans";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "react-hot-toast";
-
-
-
+import { Analytics } from "@vercel/analytics/next";
 
 export const metadata: Metadata = {
   title: "My RAG App",
@@ -19,9 +17,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning className={GeistSans.className}>
-      <body
-        className={`antialiased`}
-      >
+      <body className={`antialiased`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -30,6 +26,7 @@ export default function RootLayout({
         >
           {children}
           <Toaster />
+          <Analytics />
         </ThemeProvider>
       </body>
     </html>
